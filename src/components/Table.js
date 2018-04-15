@@ -31,6 +31,12 @@ export default class extends Component{
         );
     }
 
+    loadContent = () => {
+        const { loadContent = () => {} } = this.props;
+        
+        loadContent();
+    }
+
     render(){
         const { data } = this.props;
 
@@ -40,6 +46,8 @@ export default class extends Component{
                     data={data}
                     renderItem={this.renderItem}
                     keyExtractor={this.keyExtractor}
+                    onEndReached={this.loadContent}
+                    onEndReachedThreshold='0.01'
                 />
             </View>
         );
