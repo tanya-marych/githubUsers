@@ -1,26 +1,53 @@
 import { StyleSheet } from 'react-native';
 
+const borderColor = 'white';
+const headerBgColor = '#AFCDE7';
+const cellBgColor = '#D8E6F3';
+
 export default StyleSheet.create({
     container: {
         width: '100%',
         flexDirection: 'row'
     },
     rowContainer: {
-        height: 110,
+        height: 120,
         borderLeftWidth: 1,
         borderBottomWidth: 1,
-        borderColor: 'grey'
+        borderColor,
+        backgroundColor: cellBgColor
     },
     headerContainer: {
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor,
         borderRightWidth: 0,
-        height: 40
+        height: 50,
+    },
+    headerInfoContainer: {
+        flex:1,
+        backgroundColor: headerBgColor,
+        padding: 10
+    },
+    headerAvatarContainer: {
+        width: 120,
+        borderRightWidth: 1,
+        borderColor,
+        backgroundColor: headerBgColor,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    headerText: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
+        letterSpacing: 2,
+        textShadowColor: 'rgba(0, 0, 0, 0.1)',
+        textShadowOffset: {width: 2, height: 2},
+        textShadowRadius: 5
     },
     imgContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 110
+        width: 120
     },
     img: {
         width: 100,
@@ -29,25 +56,15 @@ export default StyleSheet.create({
     },
     infoContainer: {
         flex: 1,
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         padding: 10
     },
     text: {
-        fontSize: 20
+        fontSize: 18,
+        marginBottom: 10
     },
     link: {
-        fontSize: 14
-    },
-    headerInfoContainer: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    headerAvatarContainer: {
-        width: 110,
-        borderRightWidth: 1,
-        borderColor: 'grey',
-        justifyContent: 'center',
-        alignItems: 'center'
+        fontSize: 16,
+        textDecorationLine: 'underline'
     }
 });

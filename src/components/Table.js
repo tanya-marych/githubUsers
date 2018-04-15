@@ -12,10 +12,10 @@ export default class extends Component{
         return (
             <View style={[Styles.container, Styles.headerContainer]}>
                 <Column style={Styles.headerAvatarContainer}>
-                    <Text style={Styles.text}>Avatar</Text>
+                    <Text style={Styles.headerText}>Avatar</Text>
                 </Column>
                 <Column style={Styles.headerInfoContainer}>
-                    <Text style={Styles.text}>Info</Text>
+                    <Text style={Styles.headerText}>Information</Text>
                 </Column>
             </View>
         );
