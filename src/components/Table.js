@@ -6,8 +6,20 @@ import Column from './Column';
 import Styles from './TableStyles';
 
 export default class extends Component{
-
     keyExtractor = (item) => item.login;
+
+    renderHeader = () => {
+        return (
+            <View style={[Styles.container, Styles.headerContainer]}>
+                <Column style={Styles.headerAvatarContainer}>
+                    <Text style={Styles.text}>Avatar</Text>
+                </Column>
+                <Column style={Styles.headerInfoContainer}>
+                    <Text style={Styles.text}>Info</Text>
+                </Column>
+            </View>
+        );
+    }
 
     renderItem = ({item}) => {
         const { onClick=() => {} } = this.props;
@@ -15,7 +27,7 @@ export default class extends Component{
 
         return (
             <TouchableOpacity onPress={() => onClick(item)}>
-                <View style={Styles.container}>
+                <View style={[Styles.container, Styles.rowContainer]}>
                     <Column style={Styles.imgContainer}>
                         <Image
                             style={Styles.img}
@@ -24,7 +36,7 @@ export default class extends Component{
                     </Column>
                     <Column style={Styles.infoContainer}>
                         <Text style={Styles.text}>{login}</Text>
-                        <Text style={Styles.text}>{url}</Text>
+                        <Text style={Styles.link}>{url}</Text>
                     </Column>
                 </View>
             </TouchableOpacity>
@@ -48,6 +60,7 @@ export default class extends Component{
                     keyExtractor={this.keyExtractor}
                     onEndReached={this.loadContent}
                     onEndReachedThreshold='0.01'
+                    ListHeaderComponent={this.renderHeader}
                 />
             </View>
         );

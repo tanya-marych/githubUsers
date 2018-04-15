@@ -4,19 +4,6 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import Table from '../components/Table';
 
 export default class extends Component{
-    static navigationOptions = ({ navigation }) => {
-        const { user } = navigation.state.params;
-        
-        return {
-            title: `${user.login}'s followers`,
-            headerTitleStyle :{
-                textAlign: 'center',
-                // width: '100%',
-                marginHorizontal: 0
-            }
-        }
-    };
-
     state={
         followers: null,
         isLoading: true

@@ -1,86 +1,77 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 
-
 import Table from '../components/Table';
 
-export default class extends Component{
-    static navigationOptions = ({ navigation }) => {
-        const { params } = navigation.state;
-        
-        return {
-            title: 'Github users list',
-            headerTitleStyle :{
-                textAlign: 'center',
-                width: '100%',
-                marginHorizontal: 0
-            }
-        };
-    };
+import { parseHeaderLink }  from '../utils/parseUtils';
+import { setItem, getItem } from '../utils/storageUtils';
 
+import Styles from './UserListStyles';
+
+export default class extends Component{
     state = {
         isLoading: true,
         users: null,
-        next: 'https://api.github.com/users?per_page=10'
+        nextLink: 'https://api.github.com/users?per_page=10'
     }
 
     async componentDidMount(){
-        const users = await this.getUsers();
+        const res = await getItem('users');
+        let users;
+
+        if(!!res){
+            users = res;
+        } else {
+            users = await this.getUsers();
+            await setItem('users', users);
+        }
+
         this.setState({isLoading: false, users});
     }
     
     getUsers = async () => {
-        const { next } = this.state;
-        const users = await fetch(next);
+        try {
+            const { nextLink: fetchLink } = this.state;
+            const users = await fetch(fetchLink);
+            const nextLink = parseHeaderLink(users.headers.map.link[0]);
     
-        try{
-            const link = users.headers.map.link[0]
-                .split(',')
-                .find(item => item.includes('next'));
-            const next = link.split(';')[0].replace(/<|>/g,'');
-            this.setState({next});
-
-        } catch(err){
-            console.log(`Error: ${err}`);
-            this.setState({next: null})
+            this.setState({nextLink});
+        
+            return await users.json();
+        } catch(err) {
+            console.log(`Loading users error: ${err}`);
+            this.setState({error: true});
 
             return [];
         }
-        
-        return await users.json();
     }
 
-    handleClick = (user) => {
-        const { navigate } = this.props.navigation;
-
-        navigate('Followers', {user});
-    }
-
-    loadContent = async () => {
+    loadMoreUsers = async () => {
         const { users } = this.state;
         const loadUsers = await this.getUsers();
        
         this.setState({users: [...users, ...loadUsers]});
-        console.log('load',this.state.users.length)
     }
 
+    showFollowers = (user) => this.props.navigation.navigate('Followers', {user})
+
     render(){
-        const { isLoading, users } = this.state;
+        const { isLoading, users, error } = this.state;
 
         return (
             <View style={{flex:1}}>
                 {isLoading
                     ? <ActivityIndicator />
                     : (
-                        <View style={{flex:1, padding: 5}}>
+                        <View style={Styles.container}>
                             <Table
                                 data={users}
-                                onClick={this.handleClick}
-                                loadContent={this.loadContent}
+                                onClick={this.showFollowers}
+                                loadContent={this.loadMoreUsers}
                             />
-                        </View>
-                    )
+                        </View>)
                 }
+                {!!error && <Text>Sorry, please try again later.</Text>}
             </View>
         );
     }

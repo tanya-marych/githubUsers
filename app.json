@@ -1,4 +1,9 @@
 {
   "name": "githubUsers",
-  "displayName": "githubUsers"
+  "displayName": "githubUsers",
+  "expo": {
+    "name": "githubUsers",
+    "slug": "githubUsers",
+    "sdkVersion": "26.0.0"
+  }
 }
