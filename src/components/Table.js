@@ -6,7 +6,7 @@ import Column from './Column';
 import Styles from './TableStyles';
 
 export default class extends Component{
-    keyExtractor = (item) => item.login;
+    keyExtractor = (item) => item.id+''
 
     renderHeader = () => {
         return (
@@ -49,7 +49,7 @@ export default class extends Component{
         loadContent();
     }
 
-    render(){
+    render() {
         const { data } = this.props;
 
         return (

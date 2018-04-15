@@ -21,6 +21,8 @@ export default class extends Component{
 
         if(!!res){
             users = res;
+            const nextId = users.slice(-1)[0].id;
+            this.setState({nextLink: `https://api.github.com/users?per_page=10&since=${nextId}`});
         } else {
             users = await this.getUsers();
             await setItem('users', users);

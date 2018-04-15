@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator }   from 'react-navigation';
+import { View } from 'react-native';
 
 import UserListScreen from '../pages/UserListPage';
 import FollowersScreen from '../pages/FollowersPage';
@@ -14,14 +15,17 @@ const MainNavigation = StackNavigator({
         Followers: {
             screen: FollowersScreen,
             navigationOptions: ({ navigation }) => ({
-                title: `${navigation.state.params.user.login}'s followers`
+                title: `${navigation.state.params.user.login}'s followers`,
+                headerRight: <View></View>
             }),
         }
     }, {
-        headerTitleStyle :{
-            textAlign: 'center',
-            width: '100%',
-            marginHorizontal: 0
+        navigationOptions: {
+            headerTitleStyle :{
+                textAlign: 'center',
+                width: '100%',
+                marginHorizontal: 0
+            }
         }
     });
 
